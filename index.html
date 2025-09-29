@@ -2,231 +2,703 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bot Hosting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siputzx Store - Bot, Game & Website</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --text-primary: #1a1a1a;
+      --text-secondary: #6c757d;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --border: #e9ecef;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.08);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #0f172a;
+        --bg-secondary: #1e293b;
+        --text-primary: #f1f5f9;
+        --text-secondary: #94a3b8;
+        --accent: #10b981;
+        --accent-hover: #34d399;
+        --border: #334155;
+        --card-bg: #1e293b;
+        --shadow: rgba(0, 0, 0, 0.3);
+      }
+    }
     
     * {
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
     }
     
     body {
-      background: #ffffff;
-      color: #000;
-      padding: 60px 20px;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background 0.3s ease, color 0.3s ease;
     }
     
-    .container {
-      max-width: 1200px;
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      padding: 80px 20px 60px;
     }
     
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
+    .hero-content {
+      text-align: center;
+      max-width: 800px;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+    
+    .hero .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+    
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--accent);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+    
+    .hero-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+      color: white;
+    }
+    
+    .section {
+      padding: 80px 20px;
+    }
+    
+    .section-title {
       text-align: center;
       margin-bottom: 60px;
-      color: #000;
     }
     
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    
-    .card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      padding: 32px 24px;
-      transition: all 0.3s ease;
-    }
-    
-    .card:hover {
-      border-color: #10b981;
-      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-    }
-    
-    .name {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #999;
+    .section-title h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
       margin-bottom: 16px;
     }
     
-    .price {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 24px;
-      color: #000;
+    .section-title p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
     }
     
-    .specs {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 24px 0;
-    }
-    
-    .specs li {
+    .category-tabs {
       display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #f5f5f5;
-      font-size: 0.9rem;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
     }
     
-    .specs li:last-child {
+    .category-tab {
+      padding: 12px 28px;
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      color: var(--text-primary);
+    }
+    
+    .category-tab:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .category-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent) 0%, #06b6d4 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px var(--shadow);
+      border-color: var(--accent);
+    }
+    
+    .product-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .product-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    
+    .product-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    
+    .product-price {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+    
+    .product-price span {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .product-specs {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    
+    .product-specs li {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    
+    .product-specs li:last-child {
       border-bottom: none;
     }
     
-    .label {
-      color: #999;
+    .product-specs i {
+      color: var(--accent);
+      margin-right: 12px;
+      width: 20px;
     }
     
-    .value {
-      color: #000;
+    .spec-label {
+      color: var(--text-secondary);
+      flex: 1;
+    }
+    
+    .spec-value {
       font-weight: 600;
+      color: var(--text-primary);
     }
     
-    .btn {
+    .buy-btn {
       width: 100%;
-      background: #10b981;
-      color: #fff;
-      border: none;
       padding: 14px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 12px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 1rem;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
       text-decoration: none;
-      display: block;
-      text-align: center;
     }
     
-    .btn:hover {
-      background: #059669;
-      color: #fff;
+    .buy-btn:hover {
+      background: var(--accent-hover);
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+      color: white;
     }
     
-    .popular {
-      position: relative;
-    }
-    
-    .popular::before {
-      content: 'POPULAR';
+    .popular-badge {
       position: absolute;
       top: -1px;
       right: -1px;
-      background: #10b981;
-      color: #fff;
-      padding: 4px 12px;
-      font-size: 0.65rem;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      padding: 6px 16px;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      border-radius: 0 16px 0 16px;
+    }
+    
+    .features {
+      background: var(--bg-secondary);
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-item {
+      text-align: center;
+      padding: 32px 20px;
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--accent) 0%, #06b6d4 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+    }
+    
+    .feature-icon i {
+      font-size: 2rem;
+      color: white;
+    }
+    
+    .feature-item h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    
+    .feature-item p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .hidden {
+      display: none;
     }
     
     @media (max-width: 768px) {
-      h1 {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section-title h2 {
         font-size: 2rem;
       }
       
-      .price {
-        font-size: 2rem;
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .category-tabs {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .category-tab {
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <h1>Bot Hosting</h1>
+  <section class="hero">
+    <div class="hero-content" data-aos="fade-up">
+      <h1>Hosting <span class="gradient-text">Premium</span><br>untuk Semua Kebutuhan</h1>
+      <p>Pilih paket hosting terbaik untuk Bot WhatsApp, Game Server, atau Website Anda dengan performa maksimal dan harga terjangkau</p>
+      <a href="#products" class="hero-cta">
+        <i class="fas fa-rocket"></i>
+        Mulai Sekarang
+      </a>
+    </div>
+  </section>
+
+  <section class="section features">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Mengapa Memilih Kami?</h2>
+        <p>Layanan hosting terpercaya dengan fitur terlengkap</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h3>Performa Cepat</h3>
+          <p>Server dengan AMD Epyc dan SSD NVMe untuk kecepatan maksimal</p>
+        </div>
+        <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>99.9% Uptime</h3>
+          <p>Jaminan server online 24/7 dengan monitoring real-time</p>
+        </div>
+        <div class="feature-item" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-icon">
+            <i class="fas fa-headset"></i>
+          </div>
+          <h3>Support 24/7</h3>
+          <p>Tim support siap membantu kapan saja via WhatsApp</p>
+        </div>
+        <div class="feature-item" data-aos="fade-up" data-aos-delay="400">
+          <div class="feature-icon">
+            <i class="fas fa-wallet"></i>
+          </div>
+          <h3>Harga Terjangkau</h3>
+          <p>Paket mulai dari 3K dengan spesifikasi terbaik di kelasnya</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Pilih Paket Hosting</h2>
+        <p>Berbagai pilihan paket sesuai kebutuhan Anda</p>
+      </div>
+
+      <div class="category-tabs" data-aos="fade-up" data-aos-delay="100">
+        <div class="category-tab active" onclick="showCategory('bot')">
+          <i class="fab fa-whatsapp"></i> Bot WhatsApp
+        </div>
+        <div class="category-tab" onclick="showCategory('game')">
+          <i class="fas fa-gamepad"></i> Game Server
+        </div>
+        <div class="category-tab" onclick="showCategory('website')">
+          <i class="fas fa-globe"></i> Website
+        </div>
+      </div>
+
+      <div id="bot-products" class="products-grid">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Trial</span>
+          <h3 class="product-name">Bot Starter</h3>
+          <div class="product-price">3K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">1GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">30%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">5GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20STARTER*%0A%0ASpesifikasi:%0ARAM:%201GB%0ACPU:%2030%%0ADisk:%202GB%0AHarga:%20Rp%203.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="product-badge">Mini</span>
+          <h3 class="product-name">Bot Basic</h3>
+          <div class="product-price">5K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">3GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">50%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">10GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20BASIC*%0A%0ASpesifikasi:%0ARAM:%203GB%0ACPU:%2050%%0ADisk:%206GB%0AHarga:%20Rp%205.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <span class="popular-badge">POPULER</span>
+          <span class="product-badge">Standar</span>
+          <h3 class="product-name">Bot Pro</h3>
+          <div class="product-price">15K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">6GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">100%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">15GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20PRO*%0A%0ASpesifikasi:%0ARAM:%206GB%0ACPU:%20100%%0ADisk:%2011GB%0AHarga:%20Rp%2015.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Pro</span>
+          <h3 class="product-name">Bot Premium</h3>
+          <div class="product-price">20K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">7GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">120%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">20GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20PREMIUM*%0A%0ASpesifikasi:%0ARAM:%207GB%0ACPU:%20120%%0ADisk:%2013GB%0AHarga:%20Rp%2020.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="product-badge">Bisnis</span>
+          <h3 class="product-name">Bot Business</h3>
+          <div class="product-price">25K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">8GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">140%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">30GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20BUSINESS*%0A%0ASpesifikasi:%0ARAM:%208GB%0ACPU:%20140%%0ADisk:%2016GB%0AHarga:%20Rp%2025.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <span class="product-badge">Sultan</span>
+          <h3 class="product-name">Bot Elite</h3>
+          <div class="product-price">40K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">14GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">200%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">35GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20ELITE*%0A%0ASpesifikasi:%0ARAM:%2014GB%0ACPU:%20200%%0ADisk:%2031GB%0AHarga:%20Rp%2040.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Overkill</span>
+          <h3 class="product-name">Bot Ultimate</h3>
+          <div class="product-price">50K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">16GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">250%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">45GB</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BOT%20ULTIMATE*%0A%0ASpesifikasi:%0ARAM:%2016GB%0ACPU:%20250%%0ADisk:%2041GB%0AHarga:%20Rp%2050.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+      </div>
+
+      <div id="game-products" class="products-grid hidden">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Starter</span>
+          <h3 class="product-name">Game Mini</h3>
+          <div class="product-price">35K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">4GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">60%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">15GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*GAME%20MINI*%0A%0ASpesifikasi:%0ARAM:%204GB%0ACPU:%2060%%0ADisk:%2015GB%0AHarga:%20Rp%2035.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="popular-badge">POPULER</span>
+          <span class="product-badge">Standard</span>
+          <h3 class="product-name">Game Pro</h3>
+          <div class="product-price">60K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">8GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">120%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">30GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*GAME%20PRO*%0A%0ASpesifikasi:%0ARAM:%208GB%0ACPU:%20120%%0ADisk:%2030GB%0AHarga:%20Rp%2060.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <span class="product-badge">Premium</span>
+          <h3 class="product-name">Game Elite</h3>
+          <div class="product-price">100K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">16GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">200%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">60GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*GAME%20ELITE*%0A%0ASpesifikasi:%0ARAM:%2016GB%0ACPU:%20200%%0ADisk:%2060GB%0AHarga:%20Rp%20100.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Ultimate</span>
+          <h3 class="product-name">Game Monster</h3>
+          <div class="product-price">150K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">32GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">300%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">100GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*GAME%20MONSTER*%0A%0ASpesifikasi:%0ARAM:%2032GB%0ACPU:%20300%%0ADisk:%20100GB%0AHarga:%20Rp%20150.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+      </div>
+
+      <div id="website-products" class="products-grid hidden">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Basic</span>
+          <h3 class="product-name">Web Starter</h3>
+          <div class="product-price">10K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">2GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">40%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">10GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*WEB%20STARTER*%0A%0ASpesifikasi:%0ARAM:%202GB%0ACPU:%2040%%0ADisk:%2010GB%0AHarga:%20Rp%2010.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <span class="popular-badge">POPULER</span>
+          <span class="product-badge">Standard</span>
+          <h3 class="product-name">Web Business</h3>
+          <div class="product-price">25K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">4GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">80%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">25GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*WEB%20BUSINESS*%0A%0ASpesifikasi:%0ARAM:%204GB%0ACPU:%2080%%0ADisk:%2025GB%0AHarga:%20Rp%2025.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+          <span class="product-badge">Premium</span>
+          <h3 class="product-name">Web Enterprise</h3>
+          <div class="product-price">45K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">8GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">150%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">50GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*WEB%20ENTERPRISE*%0A%0ASpesifikasi:%0ARAM:%208GB%0ACPU:%20150%%0ADisk:%2050GB%0AHarga:%20Rp%2045.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+
+        <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+          <span class="product-badge">Ultimate</span>
+          <h3 class="product-name">Web Unlimited</h3>
+          <div class="product-price">75K <span>/bulan</span></div>
+          <ul class="product-specs">
+            <li><i class="fas fa-memory"></i><span class="spec-label">RAM</span><span class="spec-value">16GB</span></li>
+            <li><i class="fas fa-microchip"></i><span class="spec-label">CPU</span><span class="spec-value">250%</span></li>
+            <li><i class="fas fa-hdd"></i><span class="spec-label">Disk</span><span class="spec-value">100GB SSD</span></li>
+          </ul>
+          <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*WEB%20UNLIMITED*%0A%0ASpesifikasi:%0ARAM:%2016GB%0ACPU:%20250%%0ADisk:%20100GB%0AHarga:%20Rp%2075.000" class="buy-btn">
+            <i class="fas fa-shopping-cart"></i> Pesan Sekarang
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background: var(--bg-secondary); padding: 40px 20px; text-align: center;">
+    <div class="container">
+      <p style="color: var(--text-secondary); margin-bottom: 12px;">© 2025 Siputzx Store. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   
-  <div class="grid">
-    
-    <div class="card">
-      <div class="name">Trial</div>
-      <div class="price">3K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">1GB</span></li>
-        <li><span class="label">CPU</span><span class="value">30%</span></li>
-        <li><span class="label">Disk</span><span class="value">2GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*TRIAL*%0A%0ASpesifikasi:%0ARAM:%201GB%0ACPU:%2030%%0ADisk:%201GB%0AHarga:%20Rp%203.000" class="btn">Pesan via WhatsApp</a>
-    </div>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
 
-    <div class="card">
-      <div class="name">Mini</div>
-      <div class="price">5K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">3GB</span></li>
-        <li><span class="label">CPU</span><span class="value">50%</span></li>
-        <li><span class="label">Disk</span><span class="value">6GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*MINI*%0A%0ASpesifikasi:%0ARAM:%203GB%0ACPU:%2050%%0ADisk:%205GB%0AHarga:%20Rp%205.000" class="btn">Pesan via WhatsApp</a>
-    </div>
+    function showCategory(category) {
+      const tabs = document.querySelectorAll('.category-tab');
+      tabs.forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
 
-    <div class="card popular">
-      <div class="name">Standar</div>
-      <div class="price">15K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">6GB</span></li>
-        <li><span class="label">CPU</span><span class="value">100%</span></li>
-        <li><span class="label">Disk</span><span class="value">11GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*STANDAR*%0A%0ASpesifikasi:%0ARAM:%206GB%0ACPU:%20100%%0ADisk:%2010GB%0AHarga:%20Rp%2015.000" class="btn">Pesan via WhatsApp</a>
-    </div>
+      document.getElementById('bot-products').classList.add('hidden');
+      document.getElementById('game-products').classList.add('hidden');
+      document.getElementById('website-products').classList.add('hidden');
 
-    <div class="card">
-      <div class="name">Pro</div>
-      <div class="price">20K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">7GB</span></li>
-        <li><span class="label">CPU</span><span class="value">120%</span></li>
-        <li><span class="label">Disk</span><span class="value">13GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*PRO*%0A%0ASpesifikasi:%0ARAM:%207GB%0ACPU:%20120%%0ADisk:%2012GB%0AHarga:%20Rp%2020.000" class="btn">Pesan via WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <div class="name">Bisnis</div>
-      <div class="price">25K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">8GB</span></li>
-        <li><span class="label">CPU</span><span class="value">140%</span></li>
-        <li><span class="label">Disk</span><span class="value">16GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*BISNIS*%0A%0ASpesifikasi:%0ARAM:%208GB%0ACPU:%20140%%0ADisk:%2015GB%0AHarga:%20Rp%2025.000" class="btn">Pesan via WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <div class="name">Sultan</div>
-      <div class="price">40K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">14GB</span></li>
-        <li><span class="label">CPU</span><span class="value">200%</span></li>
-        <li><span class="label">Disk</span><span class="value">31GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*SULTAN*%0A%0ASpesifikasi:%0ARAM:%2014GB%0ACPU:%20200%%0ADisk:%2030GB%0AHarga:%20Rp%2040.000" class="btn">Pesan via WhatsApp</a>
-    </div>
-
-    <div class="card">
-      <div class="name">Overkill</div>
-      <div class="price">50K</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">16GB</span></li>
-        <li><span class="label">CPU</span><span class="value">250%</span></li>
-        <li><span class="label">Disk</span><span class="value">41GB</span></li>
-      </ul>
-      <a href="https://wa.me/6285658939117?text=Halo,%20saya%20ingin%20order%20paket%20*OVERKILL*%0A%0ASpesifikasi:%0ARAM:%2016GB%0ACPU:%20250%%0ADisk:%2040GB%0AHarga:%20Rp%2050.000" class="btn">Pesan via WhatsApp</a>
-    </div>
-
-  </div>
-</div>
+      document.getElementById(category + '-products').classList.remove('hidden');
+      
+      AOS.refresh();
+    }
+  </script>
 
 </body>
 </html>
