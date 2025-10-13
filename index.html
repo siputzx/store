@@ -31,10 +31,23 @@
 </head>
 <body>
 <div class="container">
-  <h1>Hosting Bot WhatsApp</h1>
+  <h1>Hosting Bot Discord / NodeJS</h1>
+  <div id="discountBanner" class="discount-banner" style="display:none;"></div>
   <div class="grid" id="plans"></div>
 </div>
+
 <script>
+  const firstPurchaseDiscount = 0.20;
+  const discountDate = "2025-10-13";
+  const today = new Date().toISOString().slice(0,10);
+  const discountActive = today === discountDate;
+  const banner = document.getElementById("discountBanner");
+  if (discountActive) {
+    banner.style.display = "block";
+    banner.textContent = `🔥 Diskon ${firstPurchaseDiscount * 100}% untuk pembelian pertama semua produk! Hanya hari ini (${discountDate.split('-').reverse().join('-')}) 🔥`;
+  }
+
+  // === DATA PAKET ===
   const plans = [
     { name: "Starter", ram: "512MB", cpu: "20%", disk: "1GB", price: 4000 },
     { name: "Trial", ram: "1GB", cpu: "30%", disk: "2GB", price: 6000 },
@@ -86,7 +99,12 @@
       if (month === 2) total *= 0.95;
       if (month === 3) total *= 0.90;
 
+      if (discountActive && action.value === "baru") {
+        total *= (1 - firstPurchaseDiscount);
+      }
+
       priceEl.textContent = "Rp" + Math.round(total).toLocaleString();
+
       const tipe = action.value === "perpanjang" ? "Perpanjang Paket" : "Beli Paket Baru";
       const msg = encodeURIComponent(
         `Halo, saya ingin *${tipe} ${p.name}*\n\nDurasi: ${month} Bulan\nSpesifikasi:\nRAM: ${p.ram}\nCPU: ${p.cpu}\nDisk: ${p.disk}\nTotal Harga: Rp${Math.round(total).toLocaleString()}`
