@@ -31,23 +31,23 @@
 </head>
 <body>
 <div class="container">
-  <h1>Hosting Bot Discord / NodeJS</h1>
+  <h1>Hosting NodeJS</h1>
   <div id="discountBanner" class="discount-banner" style="display:none;"></div>
   <div class="grid" id="plans"></div>
 </div>
 
 <script>
   const firstPurchaseDiscount = 0.20;
-  const discountDate = "2025-11-1";
+  const discountStartDate = "2025-11-01";
+  const discountEndDate = "2025-11-02";
   const today = new Date().toISOString().slice(0,10);
-  const discountActive = today === discountDate;
+  const discountActive = today >= discountStartDate && today <= discountEndDate;
   const banner = document.getElementById("discountBanner");
   if (discountActive) {
     banner.style.display = "block";
-    banner.textContent = `🔥 Diskon ${firstPurchaseDiscount * 100}% untuk pembelian pertama semua produk! Hanya hari ini (${discountDate.split('-').reverse().join('-')}) 🔥`;
+    banner.textContent = `🔥 Diskon ${firstPurchaseDiscount * 100}% untuk pembelian pertama semua produk! Periode ${discountStartDate.split('-').reverse().join('-')} sampai ${discountEndDate.split('-').reverse().join('-')} 🔥`;
   }
 
-  // === DATA PAKET ===
   const plans = [
     { name: "Starter", ram: "512MB", cpu: "20%", disk: "1GB", price: 4000 },
     { name: "Trial", ram: "1GB", cpu: "30%", disk: "2GB", price: 6000 },
