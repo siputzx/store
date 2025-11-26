@@ -1,125 +1,66 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hosting Bot - Beli & Perpanjang Paket</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-    *{margin:0;padding:0;font-family:'Inter',sans-serif}
-    body{background:#fff;color:#000;padding:60px 20px}
-    .container{max-width:1200px}
-    h1{text-align:center;font-weight:700;margin-bottom:40px;font-size:2.3rem}
-    .discount-banner{background:#10b981;color:#fff;padding:15px;border-radius:10px;text-align:center;margin-bottom:35px;font-weight:600}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
-    .card{background:#fff;border:1px solid #e5e5e5;padding:28px 22px;border-radius:12px;transition:all .3s ease;position:relative}
-    .card:hover{border-color:#10b981;box-shadow:0 4px 12px rgba(16,185,129,.15)}
-    .name{font-size:.9rem;font-weight:700;text-transform:uppercase;color:#10b981;margin-bottom:12px}
-    .price{font-size:1.8rem;font-weight:700;margin-bottom:18px}
-    .specs{list-style:none;padding:0;margin:0 0 20px}
-    .specs li{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f2f2f2;font-size:.9rem}
-    .specs li:last-child{border-bottom:none}
-    .label{color:#777}
-    .value{font-weight:600}
-    .btn{width:100%;background:#10b981;color:#fff;border:none;padding:12px;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;text-align:center;transition:all .2s ease;border-radius:8px}
-    .btn:hover{background:#059669}
-    .duration-select,.action-select{width:100%;margin-bottom:10px;border:1px solid #ddd;padding:8px;border-radius:6px;font-size:.9rem}
-    .popular::before{content:'REKOMENDASI';position:absolute;top:-1px;right:-1px;background:#10b981;color:#fff;padding:4px 10px;font-size:.7rem;font-weight:700;border-top-right-radius:8px;border-bottom-left-radius:8px}
-    @media(max-width:768px){h1{font-size:2rem}.price{font-size:1.6rem}}
-  </style>
-</head>
-<body>
-<div class="container">
-  <h1>Hosting NodeJS</h1>
-  <div id="discountBanner" class="discount-banner" style="display:none;"></div>
-  <div class="grid" id="plans"></div>
-</div>
-
-<script>
-  const firstPurchaseDiscount = 0.20;
-  const discountStartDate = "2025-11-01";
-  const discountEndDate = "2025-11-02";
-  const today = new Date().toISOString().slice(0,10);
-  const discountActive = today >= discountStartDate && today <= discountEndDate;
-  const banner = document.getElementById("discountBanner");
-  if (discountActive) {
-    banner.style.display = "block";
-    banner.textContent = `🔥 Diskon ${firstPurchaseDiscount * 100}% untuk pembelian pertama semua produk! Periode ${discountStartDate.split('-').reverse().join('-')} sampai ${discountEndDate.split('-').reverse().join('-')} 🔥`;
-  }
-
-const plans = [
-  { name: "Starter", ram: "512MB", cpu: "20%", disk: "1GB", price: 2992 },
-  { name: "Trial", ram: "1GB", cpu: "30%", disk: "2GB", price: 4995 },
-  { name: "Basic", ram: "2GB", cpu: "40%", disk: "4GB", price: 6997 },
-  { name: "Mini", ram: "3GB", cpu: "50%", disk: "6GB", price: 7998 },
-  { name: "Regular", ram: "4GB", cpu: "80%", disk: "8GB", price: 10995 },
-  { name: "Standar", ram: "6GB", cpu: "100%", disk: "11GB", price: 16997 },
-  { name: "Advanced", ram: "7GB", cpu: "110%", disk: "12GB", price: 20995 },
-  { name: "Pro", ram: "7GB", cpu: "120%", disk: "13GB", price: 22998 },
-  { name: "Bisnis", ram: "8GB", cpu: "140%", disk: "16GB", price: 26995 },
-  { name: "Enterprise", ram: "9GB", cpu: "150%", disk: "18GB", price: 30997 },
-  { name: "Premium", ram: "10GB", cpu: "160%", disk: "20GB", price: 34998 },
-  { name: "Sultan", ram: "14GB", cpu: "200%", disk: "31GB", price: 42995 },
-  { name: "Overkill", ram: "16GB", cpu: "250%", disk: "41GB", price: 50997 },
-  { name: "Ultimate", ram: "20GB", cpu: "300%", disk: "50GB", price: 58998 }
-];
-
-  const container = document.getElementById("plans");
-  plans.forEach(p => {
-    const el = document.createElement("div");
-    el.className = `card ${p.name === "Regular" || p.name === "Premium" ? "popular" : ""}`;
-    el.innerHTML = `
-      <div class="name">${p.name}</div>
-      <div class="price" id="price-${p.name}">Rp${p.price.toLocaleString()}</div>
-      <ul class="specs">
-        <li><span class="label">RAM</span><span class="value">${p.ram}</span></li>
-        <li><span class="label">CPU</span><span class="value">${p.cpu}</span></li>
-        <li><span class="label">Disk</span><span class="value">${p.disk}</span></li>
-      </ul>
-      <select class="action-select" id="action-${p.name}">
-        <option value="baru">🆕 Beli Baru</option>
-        <option value="perpanjang">♻️ Perpanjang Paket</option>
-      </select>
-      <select class="duration-select" id="duration-${p.name}">
-        <option value="1">1 Bulan</option>
-        <option value="2">2 Bulan (-5%)</option>
-        <option value="3">3 Bulan (-10%)</option>
-      </select>
-      <a id="btn-${p.name}" href="#" class="btn">Pesan via WhatsApp</a>
-    `;
-    container.appendChild(el);
-
-    const select = document.getElementById(`duration-${p.name}`);
-    const action = document.getElementById(`action-${p.name}`);
-    const priceEl = document.getElementById(`price-${p.name}`);
-    const btn = document.getElementById(`btn-${p.name}`);
-
-    function updatePrice() {
-      let month = parseInt(select.value);
-      let total = p.price * month;
-
-      if (action.value === "perpanjang") total *= 0.85;
-      if (month === 2) total *= 0.95;
-      if (month === 3) total *= 0.90;
-
-      if (discountActive && action.value === "baru") {
-        total *= (1 - firstPurchaseDiscount);
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Siputzx Hosting | Premium Solutions</title>
+    <!-- Google Fonts: Inter and Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              background: '#191919',
+              card: '#252525',
+              primary: '#6366f1', // Indigo 500
+              secondary: '#ec4899', // Pink 500
+            }
+          }
+        }
       }
+    </script>
+    <style>
+      /* Custom Scrollbar for Webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #191919; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #444; 
+      }
+    </style>
 
-      priceEl.textContent = "Rp" + Math.round(total).toLocaleString();
-
-      const tipe = action.value === "perpanjang" ? "Perpanjang Paket" : "Beli Paket Baru";
-      const msg = encodeURIComponent(
-        `Halo, saya ingin *${tipe} ${p.name}*\n\nDurasi: ${month} Bulan\nSpesifikasi:\nRAM: ${p.ram}\nCPU: ${p.cpu}\nDisk: ${p.disk}\nTotal Harga: Rp${Math.round(total).toLocaleString()}`
-      );
-      btn.href = `https://wa.me/6285658939117?text=${msg}`;
-    }
-
-    select.addEventListener("change", updatePrice);
-    action.addEventListener("change", updatePrice);
-    updatePrice();
-  });
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@6.22.1"
+  }
+}
 </script>
+  <script type="module" crossorigin src="/index-Dj0OfVez.js"></script>
+</head>
+  <body class="bg-background text-white antialiased overflow-x-hidden">
+    <div id="root"></div>
 </body>
 </html>
